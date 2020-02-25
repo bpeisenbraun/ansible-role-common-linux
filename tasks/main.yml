@@ -1,0 +1,41 @@
+---
+- name: Install common packages
+  apt:
+    name: "{{ package_list }}"
+    state: "{{ pkgversion | default('present') }}"
+    update_cache: yes
+    cache_valid_time: 600
+
+# If we have users configured, create them
+- name: Ensure our user accounts exist
+  user:
+    name: "{{ item.username }}"
+    groups: "{{ item.groups|default('') }}"
+    append: yes
+    shell: "{{ item.shell|default('/bin/bash') }}"
+  when: user_list is defined
+  with_items:
+    - "{{ user_list }}"
+
+- name: Add some nicer basic bash settings
+  copy:
+    src: etc/profile.d/common.sh
+    dest: /etc/profile.d/common.sh
+    owner: root
+    group: root
+    mode: 0444
+
+- name: Set our hostname
+  hostname:
+    name: "{{ hostname }}"
+
+- name: Set timezone
+  timezone:
+    name: "America/New_York"
+
+- name: Collect system stats
+  lineinfile:
+    dest: /etc/default/sysstat
+    regexp: '^ENABLED=.*'
+    line: 'ENABLED="true"'
+    state: present

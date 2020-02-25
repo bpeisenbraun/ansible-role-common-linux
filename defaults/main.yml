@@ -1,0 +1,33 @@
+---
+package_list:
+  # Editors
+  - vim-nox
+  # Shells/tools
+  - bash-completion
+  - finger
+  - pv
+  - tmux
+  # Network tools
+  - netcat
+  - nmap
+  - mtr-tiny
+  - tcptraceroute
+  - traceroute
+  - whois
+  # System tools
+  - apt-file
+  - apt-listchanges
+  - apt-show-versions
+  - debian-goodies
+  - dstat
+  - htop
+  - iftop
+  - iotop
+  - logwatch
+  - python-apt
+  - sysstat
+  - unattended-upgrades
+  # Web tools
+  - curl
+  - elinks
+  - wget
