@@ -25,6 +25,7 @@
   when: user_list is defined
   with_items:
     - "{{ user_list }}"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: Add some nicer basic bash settings
   copy:
