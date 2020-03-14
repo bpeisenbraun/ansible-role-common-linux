@@ -8,12 +8,13 @@
 
 - name: Ensure our additional groups exist
   group:
-    name: "{{ item.name }}"
+    name: "{{ item.groupname }}"
     gid: "{{ item.gid | default(omit) }}"
     state: present
   when: group_list is defined
   with_items:
     - "{{ group_list }}"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: Ensure our user accounts exist
   user:
@@ -47,3 +48,4 @@
     regexp: '^ENABLED=.*'
     line: 'ENABLED="true"'
     state: present
+  ignore_errors: "{{ ansible_check_mode }}"
