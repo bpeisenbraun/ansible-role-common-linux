@@ -6,7 +6,15 @@
     update_cache: yes
     cache_valid_time: 600
 
-# If we have users configured, create them
+- name: Ensure our additional groups exist
+  group:
+    name: "{{ item.name }}"
+    gid: "{{ item.gid | default(omit) }}"
+    state: present
+  when: group_list is defined
+  with_items:
+    - "{{ group_list }}"
+
 - name: Ensure our user accounts exist
   user:
     name: "{{ item.username }}"
